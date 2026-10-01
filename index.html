@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chef on Demand</title>
+  <style>
+    :root {
+      --primary: #ff7043;
+      --primary-dark: #ef5a2d;
+      --bg: #fffaf7;
+      --card: #ffffff;
+      --text: #1f1f1f;
+      --muted: #666;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", Arial, sans-serif;
+      background: linear-gradient(180deg, #fffaf7 0%, #fff 100%);
+      color: var(--text);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), #ff8a65);
+      color: #fff;
+      text-align: center;
+      padding: 48px 20px 34px;
+      box-shadow: 0 8px 20px rgba(255, 112, 67, 0.2);
+    }
+
+    header h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 1.1rem;
+      opacity: 0.96;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    section {
+      margin-top: 30px;
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-size: clamp(1.5rem, 2vw, 2.3rem);
+      color: var(--text);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      margin: 0 0 16px;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .card ul {
+      margin: 0 0 20px;
+      padding-left: 20px;
+      line-height: 1.9;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .utility {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .utility button {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    }
+
+    .utility button.active,
+    .language-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .rating-wrap {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px 20px;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .rating-wrap p {
+      margin: 10px 0;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .stars {
+      color: #f5b942;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .language-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .language-btn {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: 600;
+    }
+
+    .summary-box {
+      margin-top: 26px;
+      background: #fff7f3;
+      border-left: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      display: none;
+    }
+
+    .summary-box.show {
+      display: block;
+    }
+
+    .summary-box strong {
+      color: var(--primary-dark);
+    }
+
+    footer {
+      background: #1f1f1f;
+      color: #fff;
+      text-align: center;
+      padding: 24px 16px;
+      margin-top: 50px;
+      font-size: 0.98rem;
+    }
+
+    @media (max-width: 700px) {
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding-top: 40px;
+      }
+
+      .card, .rating-wrap {
+        padding: 20px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Chef on Demand</h1>
+    <p>Certified chefs at your doorstep in 10 minutes</p>
+  </header>
+
+  <div class="container">
+    <section>
+      <h2>Select Cuisine Type</h2>
+      <div class="options">
+        <div class="card">
+          <h3>Veg</h3>
+          <ul>
+            <li>North Indian Thali</li>
+            <li>South Indian Meals</li>
+            <li>Chinese Veg Combo</li>
+          </ul>
+          <button class="book-btn" data-type="Veg">Book Veg Chef</button>
+        </div>
+
+        <div class="card">
+          <h3>Non-Veg</h3>
+          <ul>
+            <li>Chicken Curry + Rice</li>
+            <li>Mutton Biryani</li>
+            <li>Fish Fry Combo</li>
+          </ul>
+          <button class="book-btn" data-type="Non-Veg">Book Non-Veg Chef</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Grocery Options</h2>
+      <div class="utility">
+        <button class="grocery-btn active" data-grocery="Chef brings groceries">Chef brings groceries</button>
+        <button class="grocery-btn" data-grocery="Use my groceries">Use my groceries</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Chef Rating & Repeat Booking</h2>
+      <div class="rating-wrap">
+        <div class="stars">⭐ ⭐ ⭐ ⭐ ⭐</div>
+        <p>Rate your chef after service</p>
+        <p>Call the same chef again</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Languages</h2>
+      <div class="language-group">
+        <button class="language-btn active" data-lang="English">English</button>
+        <button class="language-btn" data-lang="हिंदी">हिंदी</button>
+        <button class="language-btn" data-lang="मराठी">मराठी</button>
+      </div>
+    </section>
+
+    <div class="summary-box" id="summaryBox">
+      <strong>Booking Summary:</strong>
+      <div id="summaryText">You selected a Veg chef, grocery option: Chef brings groceries, language: English.</div>
+    </div>
+  </div>
+
+  <footer>
+    Available 24/7 | Certified Chefs | Fast Arrival
+  </footer>
+
+  <script>
+    const summaryBox = document.getElementById("summaryBox");
+    const summaryText = document.getElementById("summaryText");
+    const bookingType = { value: "Veg" };
+    const groceryType = { value: "Chef brings groceries" };
+    const languageType = { value: "English" };
+
+    document.querySelectorAll(".book-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        bookingType.value = button.dataset.type;
+        updateSummary();
+      });
+    });
+
+    document.querySelectorAll(".grocery-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".grocery-btn").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        groceryType.value = button.dataset.grocery;
+        updateSummary();
+      });
+    });
+
+    document.querySelectorAll(".language-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".language-btn").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        languageType.value = button.dataset.lang;
+        updateSummary();
+      });
+    });
+
+    function updateSummary() {
+      summaryText.textContent = `You selected a ${bookingType.value} chef, grocery option: ${groceryType.value}, language: ${languageType.value}.`;
+      summaryBox.classList.add("show");
+    }
+
+    updateSummary();
+  </script>
+</body>
+</html>
